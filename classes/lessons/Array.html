@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>array</title>
+  </head>
+  <body>
+    <script>
+      const newArr = [
+        12,
+        "hello world",
+        { name: "ali" },
+        ["name", 12],
+        () => {
+          console.log("hello world");
+        },
+      ];
+      document.getElementById('s').innerText
+      console.log(newArr[1]);
+      console.log(typeof newArr);
+      console.log(newArr[6]);
+      console.log(newArr.length);
+      newArr[4]();
+      console.log(newArr.flat());
+      console.log(newArr.concat(1, 2, 33, 54, 667587, 565));
+      newArr.push("12", "24", "23", 12);
+      console.log(newArr);
+      newArr.unshift(12, 2, 4, 5, 45);
+      console.log(newArr);
+      newArr.pop();
+      console.log(newArr);
+      newArr.shift();
+      console.log(newArr);
+      console.log(newArr);
+      console.log(newArr.reverse());
+    </script>
+  </body>
+</html>

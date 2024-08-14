@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8</title>
+  </head>
+  <body>
+    <button onclick="chnageColor(event)">red</button>
+    <button onclick="chnageColor(event)">green</button>
+    <button onclick="chnageColor(event)">rgb(123,234,120)</button>
+    <button onclick="chnageColor(event)">#707</button>
+    <button onclick="chnageColor(event)">sdaidjs</button>
+    <p id="text">Lorem ipsum dolor sit amet consectetur</p>
+    <script>
+      const pElement = document.getElementById("text");
+      function chnageColor(event) {
+        pElement.style.color = event.target.innerHTML;
+      }
+    </script>
+  </body>
+</html>

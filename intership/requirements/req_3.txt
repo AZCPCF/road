@@ -1,0 +1,32 @@
+1. what is Rest operator and spread operator ?
+1. 
+-----------------------------------------------
+spread operator : 
+spread operator zamani ke tozie konandeh
+rest operator : 
+rest operator zamani ke be onvan daryaft konandeh 
+-----------------------------------------------
+
+2. what is destructing ?
+2. new property from ES9 to get items from array and change items  ; 
+_______________________________________________
+example : get items from array and create variable for every item of array 
+------------------------------------------------
+JS code : const newArr = [1,2,3,4,5,6,7,8,9]
+JS code : const [one,two,...more] = newArr
+JS code : console.log(one)
+JS code : console.log(two)
+JS code : console.log(more)
+------------------------------------------------
+3. how to define default value for inputs in functions?
+3. 
+_______________________________________________
+example 
+-----------------------------------------------
+JS code : const newFn = (item = 4,e) => {
+JS code :     console.log(`newFn item:`, item  + e)
+JS code : }
+JS code : newFn(undefined,6)
+-----------------------------------------------
+4. what is the Diffrence between Rest operator and spread operator ?
+4. 

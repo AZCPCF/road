@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>9</title>
+  </head>
+  <body>
+    R:<input type="number" oninput="changeColor()" id="R" value="0" />
+    G:<input type="number" oninput="changeColor()" id="G" value="0" />
+    B:<input type="number" oninput="changeColor()" id="B" value="0" />
+    <div
+      id="box"
+      style="width: 200px; height: 200px; background-color: black"
+    ></div>
+    <script>
+      const rElement = document.getElementById("R");
+      const gElement = document.getElementById("G");
+      const bElement = document.getElementById("B");
+      const boxElement = document.getElementById("box");
+      function changeColor() {
+        boxElement.style.backgroundColor = `rgb(${rElement.value},${gElement.value},${bElement.value})`;
+      }
+      changeColor()
+    </script>
+  </body>
+</html>
