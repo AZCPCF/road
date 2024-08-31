@@ -10,7 +10,7 @@ const CreateProducts = (props) => {
                         return (
                             <ParentDiv key={Math.random()} style={{ borderColor: `${ML}`, boxShadow: `0px 0px 25px 0px ${ML}` }}>
                                 <P>{item.title}</P>
-                                <Img src={require(`../images/${item.title === "Mobile" ? 'Mobile.jpg' : 'Laptop.jpg'}`)} />
+                                <Img src={(`../images/${item.title === "Mobile" ? 'Mobile.jpg' : 'Laptop.jpg'}`)} />
                                 <P>{item.content}</P>
                             </ParentDiv>
                         )

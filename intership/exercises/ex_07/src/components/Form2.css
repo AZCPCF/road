@@ -1,0 +1,21 @@
+input,
+button {
+  width: 95%;
+  height: 30px;
+  font-size: 18px;
+  border: unset;
+  border-radius: 4px;
+  padding: 0 10px;
+}
+form {
+  width: 300px;
+  aspect-ratio: 2/2;
+  border-radius: 8px;
+  box-shadow: 0px 1px 2px 0px aqua;
+  background-color: aqua;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+}
