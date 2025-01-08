@@ -6,14 +6,14 @@
     <title>7</title>
   </head>
   <body>
-    <input type="text" id="text" oninput="checkValue()" />
+    <input type="text" id="text" oninput="checkValue()" style="outline: none;" />
     <script>
       const element = document.getElementById("text");
       function checkValue() {
         if (element.value.toLowerCase() == "dadekavweb") {
-          element.style.border = "1px solid green";
+          element.style.border = "2px solid green";
         } else {
-          element.style.border = "1px solid gray";
+          element.style.border = "2px solid gray";
         }
       }
     </script>

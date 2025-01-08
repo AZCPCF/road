@@ -46,7 +46,7 @@ export default function Users() {
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user) => (
+                    {users?.map((user) => (
                         <tr style={{position:"relative",bottom:"1px"}} key={user.id}>
                             <td>{user.id}</td>
                             <td>{user.username}</td>

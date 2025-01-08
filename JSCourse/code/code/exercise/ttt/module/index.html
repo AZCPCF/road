@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Shades Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    input {
+      margin-top: 20px;
+      padding: 10px;
+      font-size: 16px;
+      width: 300px;
+      text-align: center;
+    }
+    .color-container {
+      display: flex;
+      justify-content: center;
+      margin: 20px auto;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .color-box {
+      width: 200px;
+      height: 200px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Color Shades Generator</h1>
+  <input type="text" id="colorInput" placeholder="Enter a color (e.g., #3498db or rgb(0,0,0))">
+  <div class="color-container" id="shadesContainer"></div>
+
+  <script>
+    const colorInput = document.getElementById('colorInput');
+const shadesContainer = document.getElementById('shadesContainer');
+
+// Function to parse and normalize the color
+function normalizeColor(color) {
+  let ctx = document.createElement('canvas').getContext('2d');
+  ctx.fillStyle = color;
+  return ctx.fillStyle;
+}
+
+// Function to convert hex to RGB
+function hexToRgb(hex) {
+  const bigint = parseInt(hex.slice(1), 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return { r, g, b };
+}
+
+// Function to convert RGB to HSL
+function rgbToHsl(r, g, b) {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h, s, l;
+
+  l = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0; // achromatic
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
+    }
+    h /= 6;
+  }
+
+  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
+}
+
+// Function to adjust color brightness
+function adjustBrightness(color, percent) {
+  const num = parseInt(color.slice(1), 16);
+  const amt = Math.round(2.55 * percent);
+  const r = (num >> 16) + amt;
+  const g = ((num >> 8) & 0x00FF) + amt;
+  const b = (num & 0x0000FF) + amt;
+
+  return `#${(
+    0x1000000 +
+    (r < 255 ? (r < 0 ? 0 : r) : 255) * 0x10000 +
+    (g < 255 ? (g < 0 ? 0 : g) : 255) * 0x100 +
+    (b < 255 ? (b < 0 ? 0 : b) : 255)
+  )
+    .toString(16)
+    .slice(1)}`;
+}
+
+// Function to generate all color formats
+function getColorFormats(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  const { h, s, l } = rgbToHsl(r, g, b);
+
+  return {
+    hex,
+    rgb: `rgb(${r}, ${g}, ${b})`,
+    hsl: `hsl(${h}, ${s}%, ${l}%)`,
+    hwb: `hwb(${h} ${Math.round((Math.min(r, g, b) / 255) * 100)}% ${Math.round((1 - Math.max(r, g, b) / 255) * 100)}%)`,
+  };
+}
+
+// Generate shades
+function generateShades(baseColor) {
+  shadesContainer.innerHTML = '';
+
+  try {
+    const normalizedColor = normalizeColor(baseColor);
+
+    // Show base color with formats
+    const baseFormats = getColorFormats(normalizedColor);
+    shadesContainer.innerHTML += `<div class="color-box" style="background: ${baseFormats.hex}">
+      Base<br>${baseFormats.hex}<br>${baseFormats.rgb}<br>${baseFormats.hsl}<br>${baseFormats.hwb}
+    </div>`;
+
+    // Generate lighter shades
+    for (let i = 5; i > 0; i--) {
+      const lighter = adjustBrightness(normalizedColor, i * 10);
+      const lighterFormats = getColorFormats(lighter);
+      shadesContainer.innerHTML += `<div class="color-box" style="background: ${lighterFormats.hex}">
+        ${lighterFormats.hex}<br>${lighterFormats.rgb}<br>${lighterFormats.hsl}<br>${lighterFormats.hwb}
+      </div>`;
+    }
+
+    // Generate darker shades
+    for (let i = 1; i <= 5; i++) {
+      const darker = adjustBrightness(normalizedColor, i * -10);
+      const darkerFormats = getColorFormats(darker);
+      shadesContainer.innerHTML += `<div class="color-box" style="background: ${darkerFormats.hex}">
+        ${darkerFormats.hex}<br>${darkerFormats.rgb}<br>${darkerFormats.hsl}<br>${darkerFormats.hwb}
+      </div>`;
+    }
+  } catch (error) {
+    shadesContainer.innerHTML = `<p style="color: red;">Invalid color format. Please enter a valid hex or rgb color.</p>`;
+  }
+}
+
+// Event listener for the text input
+colorInput.addEventListener('change', (event) => {
+  generateShades(event.target.value.trim());
+});
+
+// Initialize with a default color
+const defaultColor = '#3498db';
+colorInput.value = defaultColor;
+generateShades(defaultColor);
+
+  </script>
+</body>
+</html>
