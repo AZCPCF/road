@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>event exercise 1</title>
+  </head>
+  <body>
+    <input
+      type="text"
+      oninput="handleChange(event)"
+      style="border: 2px solid gray; outline: none"
+    />
+  </body>
+  <script>
+    function handleChange(event) {
+      if (event.target.value == "test") {
+        event.target.style.borderColor = "green";
+        return;
+      }
+      event.target.style.borderColor = "gray";
+    }
+  </script>
+</html>
