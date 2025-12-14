@@ -1,0 +1,1 @@
+https://github.com/typeorm/typeorm/blob/master/docs/active-record-data-mapper.md
