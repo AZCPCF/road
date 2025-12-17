@@ -3,48 +3,50 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { CreateTaskDto } from './dto/create-task.dto';
-import { type Task, TaskStatus } from './tasks.model';
-import { TasksService } from './tasks.service';
 import { GetTaskFilterDto } from './dto/get-task-filter.dto';
+import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
+import { Task } from './tasks.entity';
+import { TasksService } from './tasks.service';
 
 @Controller('tasks')
+@UseGuards(AuthGuard())
 export class TasksController {
   constructor(private tasksService: TasksService) {}
+
   @Post()
-  createTask(@Body() createTaskDto: CreateTaskDto) {
+  createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
     return this.tasksService.createTask(createTaskDto);
   }
+
   @Get()
-  getTasks(@Query() filterDto: GetTaskFilterDto): Task[] {
-    if (Object.keys(filterDto).length) {
-      return this.tasksService.getTasksWithFilter(filterDto);
-    }
-    return this.tasksService.getAllTasks();
+  getTasks(@Query() filterDto: GetTaskFilterDto): Promise<Task[]> {
+    return this.tasksService.getTasks(filterDto);
   }
+
   @Get(':id')
-  getTaskById(@Param('id') id: string): Task | Error {
-    const task = this.tasksService.getTaskById(id);
-    if (task) {
-      return task;
-    }
-    throw new NotFoundException(`task with ID '${id}' not found`);
+  getTaskById(@Param('id') id: string): Promise<Task> {
+    return this.tasksService.getTaskById(id);
   }
+
   @Delete(':id')
-  deleteTaskById(@Param('id') id: string): void {
+  deleteTaskById(@Param('id') id: string): Promise<void> {
     return this.tasksService.deleteTaskById(id);
   }
+
   @Patch(':id/status')
   updateTaskById(
     @Param('id') id: string,
-    @Body('status') status: TaskStatus,
-  ): Task {
+    @Body() updateTaskStatusDto: UpdateTaskStatusDto,
+  ): Promise<Task> {
+    const { status } = updateTaskStatusDto;
     return this.tasksService.updateTaskById(id, status);
   }
 }
